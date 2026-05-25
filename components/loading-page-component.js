@@ -34,15 +34,4 @@ export function renderLoadingPageComponent({ appEl, user, goToPage }) {
     element: document.querySelector(".header-container"),
     goToPage,
   });
-
-  // Если режим регистрации, рендерим компонент загрузки изображения
-  const uploadImageContainer = appEl.querySelector(".upload-image-container");
-  if (uploadImageContainer) {
-    renderUploadImageComponent({
-      element: uploadImageContainer,
-      onImageUrlChange(newImageUrl) {
-        imageUrl = newImageUrl;
-      },
-    });
-  }
 }
