@@ -2,6 +2,7 @@ import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
 let imageUrl = "";
+
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {
     // @TODO: Реализовать страницу добавления поста
@@ -33,27 +34,29 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     </div>
   `;
 
-  appEl.innerHTML = appHtml;
+    appEl.innerHTML = appHtml;
 
-  renderHeaderComponent({
-    element: document.querySelector(".header-container"),
-  });
-
-  // Рендеринг компонента загрузки изображения
-  const uploadImageContainer = appEl.querySelector(".upload-image-container");
-  if (uploadImageContainer) {
-    renderUploadImageComponent({
-      element: uploadImageContainer,
-      onImageUrlChange(newImageUrl) {
-        imageUrl = newImageUrl;
-      },
+    renderHeaderComponent({
+      element: document.querySelector(".header-container"),
     });
-  }
 
-  document.getElementById("add-button").addEventListener("click", () => {
-    onAddPostClick({
-        description: "Описание картинки",
-        imageUrl: "https://image.png",
+    // Рендеринг компонента загрузки изображения
+    const uploadImageContainer = appEl.querySelector(".upload-image-container");
+    if (uploadImageContainer) {
+      renderUploadImageComponent({
+        element: uploadImageContainer,
+        onImageUrlChange(newImageUrl) {
+          imageUrl = newImageUrl;
+        },
+      });
+    }
+
+    document.getElementById("add-button").addEventListener("click", () => {
+      const description = document.querySelector(".textarea").value;
+
+      onAddPostClick({
+        description: description,
+        imageUrl: imageUrl,
       });
     });
   };
