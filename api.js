@@ -4,6 +4,7 @@ const baseHost = "https://webdev-hw-api.vercel.app";
 const personalKey = "prod";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 const userHost = `${baseHost}/api/v1/${personalKey}/instapro/user-posts`;
+const uploadHost = `${baseHost}/api/upload/image`;
 
 export function getPosts({ token }) {
   return fetch(postsHost, {
@@ -84,6 +85,26 @@ export function uploadImage({ file }) {
     method: "POST",
     body: data,
   }).then((response) => {
+    return response.json();
+  });
+}
+
+export function addPost({ token, description, imageUrl }) {
+  return fetch(postsHost, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      description,
+      imageUrl,
+    }),
+  }).then((response) => {
+    if (response.status === 401) {
+      throw new Error("Неверный логин или пароль");
+    }
+
     return response.json();
   });
 }
