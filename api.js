@@ -4,7 +4,6 @@ const baseHost = "https://webdev-hw-api.vercel.app";
 const personalKey = "prod";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 const userHost = `${baseHost}/api/v1/${personalKey}/instapro/user-posts`;
-const likesHost = `${baseHost}/api/v1/${personalKey}/instapro/${id}/like`;
 
 export function getPosts({ token }) {
   return fetch(postsHost, {
@@ -108,15 +107,12 @@ export function addPost({ token, description, imageUrl }) {
   });
 }
 
-export function toggleLike({ token, id, isLiked }) {
-  return fetch(likesHost, {
+export function toggleLike({ token, id, like }) {
+  return fetch(`${postsHost}/${id}/${like}`, {
     method: "POST",
     headers: {
       Authorization: token,
     },
-    body: JSON.stringify({
-      like: !isLiked,
-    }),
   })
     .then((response) => {
       if (response.status === 401) {
