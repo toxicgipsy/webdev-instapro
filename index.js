@@ -124,7 +124,6 @@ const renderApp = () => {
         // @TODO: реализовать добавление поста в API
         addPost({ description, imageUrl, token: getToken() })
           .then((response) => {
-            console.log({ description, imageUrl, token: getToken() });
             goToPage(POSTS_PAGE);
           })
           .catch((error) => {
