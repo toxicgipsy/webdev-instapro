@@ -2,6 +2,7 @@ import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
 import { USER_POSTS_PAGE } from "../routes.js";
 import { getLikes } from "./posts-page-component.js";
+import { likeEventListeners } from "./like-event-component.js";
 
 export function renderUserPostsPageComponent({ appEl }) {
   const headerHtml = `
@@ -57,4 +58,5 @@ export function renderUserPostsPageComponent({ appEl }) {
       });
     });
   }
+  likeEventListeners({appEl, pageComponent})
 }
