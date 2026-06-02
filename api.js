@@ -113,15 +113,11 @@ export function toggleLike({ token, id, like }) {
     headers: {
       Authorization: token,
     },
-  })
-    .then((response) => {
-      if (response.status === 401) {
-        alert("Только авторизованный пользователь может поставить лайк");
-        throw new Error("Ты неавторизован");
-      }
-      return response.json();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  }).then((response) => {
+    if (response.status === 401) {
+      alert("Только авторизованный пользователь может поставить лайк");
+      throw new Error("Ты неавторизован");
+    }
+    return response.json();
+  });
 }

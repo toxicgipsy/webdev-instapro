@@ -1,7 +1,7 @@
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
 import { USER_POSTS_PAGE } from "../routes.js";
-import { getLikes } from "./posts-page-component.js";
+import { getLikes } from "./likes-helper.js";
 import { likeEventListeners } from "./like-event-component.js";
 
 export function renderUserPostsPageComponent({ appEl }) {
@@ -9,7 +9,7 @@ export function renderUserPostsPageComponent({ appEl }) {
                     <div class="page-container">
                         <div class="header-container"></div>
                         <ul class="posts"></ul>
-                    </div>;`;
+                    </div>`;
 
   appEl.innerHTML = headerHtml;
 
@@ -25,20 +25,23 @@ export function renderUserPostsPageComponent({ appEl }) {
                         <p class="post-header__user-name">${post.user.name}</p>
                     </div>
                     <div class="post-image-container">
-                        <img class="post-image" data-post-id="${post.id}" src="${post.user.imageUrl}" data-index="${index}">
+                        <img class="post-image" data-post-id="${post.id}" src="${post.imageUrl}" data-index="${index}">
                     </div>
                     <div class="post-likes">
-                        <button data-post-id="${post.id}" class="like-button ${post.isLiked ? "true" : ""}">
-                            <img src="${post.isLiked ? "./assets/images/like-active.svg" : "./assets/images/like-not-active.svg"}">
-                        </button>
-                        <p class="post-likes-text">
-                            Нравится: <strong>${getLikes(post.likes)}</strong>
-                        </p>
+                      <button data-post-id="${post.id}" data-index="${index}" class="like-button ${post.isLiked ? "true" : ""}">
+                        <img src="${post.isLiked ? "./assets/images/like-active.svg" : "./assets/images/like-not-active.svg"}">
+                      </button>
+                      <p class="post-likes-text">
+                        Нравится: <strong>${getLikes(post.likes)}</strong>
+                      </p>
                     </div>
-                    <p class="post-text">
-                        <span class="user-name">Админ</span> новый пост
-                    </p>
-                    <p class="post-date">2026-05-25T12:31:20.189Z</p>
+                      <p class="post-text">
+                        <span class="user-name">${post.user.name}</span>
+                        ${post.description}
+                      </p>
+                      <p class="post-date">
+                       ${post.createdAt}
+                      </p>
                 </li>
             </ul>
       `;
@@ -51,6 +54,11 @@ export function renderUserPostsPageComponent({ appEl }) {
     element: document.querySelector(".header-container"),
   });
 
+  likeEventListeners({
+    appEl,
+    renderPage: () => renderUserPostsPageComponent({ appEl }),
+  });
+
   for (let userEl of document.querySelectorAll(".post-header")) {
     userEl.addEventListener("click", () => {
       goToPage(USER_POSTS_PAGE, {
@@ -58,5 +66,4 @@ export function renderUserPostsPageComponent({ appEl }) {
       });
     });
   }
-  likeEventListeners({appEl, pageComponent})
 }

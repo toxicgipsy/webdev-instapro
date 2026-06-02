@@ -1,11 +1,10 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
+import { likeEventListeners } from "./like-event-component.js";
+import { getLikes } from "./likes-helper.js";
 
 export function renderPostsPageComponent({ appEl }) {
-  // @TODO: реализовать рендер постов из api
-  console.log("Актуальный список постов:", posts);
-
   /**
    * @TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
@@ -26,7 +25,7 @@ export function renderPostsPageComponent({ appEl }) {
                       <img class="post-image" data-post-id="${post.id}" src="${post.imageUrl}" data-index="${index}">
                     </div>
                     <div class="post-likes">
-                      <button data-post-id="${post.id}" class="like-button ${post.isLiked ? "true" : ""}">
+                      <button data-post-id="${post.id}" data-index="${index}" class="like-button ${post.isLiked ? "true" : ""}">
                         <img src="${post.isLiked ? "./assets/images/like-active.svg" : "./assets/images/like-not-active.svg"}">
                       </button>
                       <p class="post-likes-text">
@@ -48,12 +47,14 @@ export function renderPostsPageComponent({ appEl }) {
 
   appEl.innerHTML = appHtml;
 
+  likeEventListeners({
+    appEl,
+    renderPage: () => renderPostsPageComponent({ appEl }),
+  });
 
   renderHeaderComponent({
     element: document.querySelector(".header-container"),
   });
-
-  const likeButtons = document.querySelectorAll(".like-button")
 
   for (let userEl of document.querySelectorAll(".post-header")) {
     userEl.addEventListener("click", () => {
@@ -62,20 +63,4 @@ export function renderPostsPageComponent({ appEl }) {
       });
     });
   }
-}
-
-// Функция получения лайка и имени пользователей, которые поставили лайк
-export function getLikes(likes) {
-  if (likes.length === 0) {
-    return 0;
-  }
-
-  const lastLike = likes[likes.length - 1];
-  const otherLikesCount = likes.length - 1;
-
-  if (otherLikesCount > 0) {
-    return `${lastLike.name} и ещё ${otherLikesCount}`;
-  }
-
-  return lastLike.name;
 }

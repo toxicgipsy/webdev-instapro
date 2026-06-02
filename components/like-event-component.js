@@ -1,31 +1,23 @@
-import { getPosts, toggleLike } from "../api.js";
-import { POSTS_PAGE } from "../routes.js";
-import { renderPostsPageComponent } from "./posts-page-component.js";
-import { renderUserPostsPageComponent } from "./user-page-component.js";
-import { posts } from "../index.js";
+import { toggleLike } from "../api.js";
+import { getToken, posts } from "../index.js";
 
-export const likeEventListeners = ({appEl, pageComponent}) => {
-    const likeButtons = document.querySelectorAll(".like-button");
+export const likeEventListeners = ({ appEl, renderPage }) => {
+  const likeButtons = document.querySelectorAll(".like-button");
 
-    for (const likeButton of likeButtons) {
-        
-    likeButton.addEventListener("click", (event) => {
-        event.stopPropagation()
-        const id = post.id
-        const index = post.index
-        let like;
+  likeButtons.forEach((likeButton) => {
+    likeButton.addEventListener("click", () => {
+      const postId = likeButton.dataset.postId;
+      const post = posts.find((p) => p.id === postId);
+      const index = likeButton.dataset.index;
 
-        posts[index].isLiked ? (like = "dislike") : (like = "like");
-
-        toggleLike({token: getToken(), id, like}).then((updatePost) => {
-            posts[index] = updatePost.post;
-            getPosts(posts);
-            if (POSTS_PAGE) {
-                renderPostsPageComponent({appEl, pageComponent})
-            } else {
-                renderUserPostsPageComponent({appEl, pageComponent})
-            }
-        })
-    })
-    }
-}
+      toggleLike({
+        token: getToken(),
+        id: postId,
+        like: post.isLiked ? "dislike" : "like",
+      }).then((updatePost) => {
+        posts[index] = updatePost.post;
+        renderPage();
+      });
+    });
+  });
+};
