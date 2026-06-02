@@ -3,6 +3,7 @@ import { posts, goToPage } from "../index.js";
 import { USER_POSTS_PAGE } from "../routes.js";
 import { getLikes } from "./likes-helper.js";
 import { likeEventListeners } from "./like-event-component.js";
+import { getTimeAgo } from "./date-helper.js";
 
 export function renderUserPostsPageComponent({ appEl }) {
   const headerHtml = `
@@ -37,10 +38,10 @@ export function renderUserPostsPageComponent({ appEl }) {
                     </div>
                       <p class="post-text">
                         <span class="user-name">${post.user.name}</span>
-                        ${post.description}
+                          ${post.description}
                       </p>
                       <p class="post-date">
-                       ${post.createdAt}
+                        ${getTimeAgo(post.createdAt)}
                       </p>
                 </li>
             </ul>

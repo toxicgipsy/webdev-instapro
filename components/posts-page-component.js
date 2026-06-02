@@ -3,6 +3,7 @@ import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
 import { likeEventListeners } from "./like-event-component.js";
 import { getLikes } from "./likes-helper.js";
+import { getTimeAgo } from "./date-helper.js";
 
 export function renderPostsPageComponent({ appEl }) {
   /**
@@ -37,7 +38,7 @@ export function renderPostsPageComponent({ appEl }) {
                       ${post.description}
                     </p>
                     <p class="post-date">
-                      ${post.createdAt}
+                     ${getTimeAgo(post.createdAt)}
                     </p>
                   </li>
                 </ul>
