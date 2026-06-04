@@ -10,8 +10,15 @@ export const likeEventListeners = ({ appEl, renderPage }) => {
       const post = posts.find((p) => p.id === postId);
       const index = likeButton.dataset.index;
 
+      const token = getToken();
+
+      if (!token) {
+        alert("Пожалуйста, авторизуйтесь, чтобы увидеть лайки");
+        return;
+      }
+
       toggleLike({
-        token: getToken(),
+        token: token,
         id: postId,
         like: post.isLiked ? "dislike" : "like",
       }).then((updatePost) => {

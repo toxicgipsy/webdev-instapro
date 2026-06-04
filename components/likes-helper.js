@@ -1,3 +1,5 @@
+import { escapeHtml } from "./escapeHtml.js";
+
 // Функция получения лайка и имени пользователей, которые поставили лайк
 export function getLikes(likes) {
   if (likes.length === 0) {
@@ -8,8 +10,8 @@ export function getLikes(likes) {
   const otherLikesCount = likes.length - 1;
 
   if (otherLikesCount > 0) {
-    return `${lastLike.name} и ещё ${otherLikesCount}`;
+    return `${escapeHtml(lastLike.name)} и ещё ${otherLikesCount}`;
   }
 
-  return lastLike.name;
+  return escapeHtml(lastLike.name);
 }

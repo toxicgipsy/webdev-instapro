@@ -52,12 +52,22 @@ export function registerUser({ login, password, name, imageUrl }) {
       name,
       imageUrl,
     }),
-  }).then((response) => {
-    if (response.status === 400) {
-      throw new Error("Такой пользователь уже существует");
-    }
-    return response.json();
-  });
+  })
+    .then((response) => {
+      if (response.status === 400) {
+        alert("Имя, логин и пароль должны быть не короче 3 символов");
+        throw new Error("Validation error");
+      }
+      if (response.status === 500) {
+        alert("Сервер сломался, попробуй позже");
+        throw new Error("Server error");
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    });
 }
 
 export function loginUser({ login, password }) {

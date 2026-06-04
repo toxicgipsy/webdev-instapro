@@ -1,3 +1,4 @@
+import { escapeHtml } from "./escapeHtml.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
@@ -54,7 +55,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       const description = document.querySelector(".textarea").value;
 
       onAddPostClick({
-        description: description,
+        description: escapeHtml(description),
         imageUrl: imageUrl,
       });
     });

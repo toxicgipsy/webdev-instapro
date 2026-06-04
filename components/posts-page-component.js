@@ -4,6 +4,7 @@ import { posts, goToPage } from "../index.js";
 import { likeEventListeners } from "./like-event-component.js";
 import { getLikes } from "./likes-helper.js";
 import { getTimeAgo } from "./date-helper.js";
+import { escapeHtml } from "./escapeHtml.js";
 
 export function renderPostsPageComponent({ appEl }) {
 
@@ -16,7 +17,7 @@ export function renderPostsPageComponent({ appEl }) {
                   <li class="post">
                     <div class="post-header" data-user-id="${post.user.id}">
                         <img src="${post.user.imageUrl}" class="post-header__user-image">
-                        <p class="post-header__user-name">${post.user.name}</p>
+                        <p class="post-header__user-name">${escapeHtml(post.user.name)}</p>
                     </div>
                     <div class="post-image-container">
                       <img class="post-image" data-post-id="${post.id}" src="${post.imageUrl}" data-index="${index}">
@@ -30,8 +31,8 @@ export function renderPostsPageComponent({ appEl }) {
                       </p>
                     </div>
                     <p class="post-text">
-                      <span class="user-name">${post.user.name}</span>
-                      ${post.description}
+                      <span class="user-name">${escapeHtml(post.user.name)}</span>
+                      ${escapeHtml(post.description)}
                     </p>
                     <p class="post-date">
                      ${getTimeAgo(post.createdAt)}
