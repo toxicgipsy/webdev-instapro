@@ -22,6 +22,7 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
    * Отображает интерфейс компонента в зависимости от состояния: 
    * либо форма выбора файла, либо превью загруженного изображения с кнопкой замены.
    */
+
   const render = () => {
     element.innerHTML = `
       <div class="upload-image">
@@ -58,9 +59,9 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
         
         // Загружаем изображение с помощью API
         uploadImage({ file }).then(({ fileUrl }) => {
-          imageUrl = fileUrl; // Сохраняем URL загруженного изображения
-          onImageUrlChange(imageUrl); // Уведомляем о изменении URL изображения
-          render(); // Перерисовываем компонент с новым состоянием
+          imageUrl = fileUrl;
+          onImageUrlChange(imageUrl);
+          render();
         });
       }
     });
@@ -69,12 +70,11 @@ export function renderUploadImageComponent({ element, onImageUrlChange }) {
     element
       .querySelector(".file-upload-remove-button")
       ?.addEventListener("click", () => {
-        imageUrl = ""; // Сбрасываем URL изображения
-        onImageUrlChange(imageUrl); // Уведомляем об изменении URL изображения
-        render(); // Перерисовываем компонент
+        imageUrl = "";
+        onImageUrlChange(imageUrl);
+        render();
       });
   };
 
-  // Инициализация компонента
   render();
 }

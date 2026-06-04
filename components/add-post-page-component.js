@@ -1,3 +1,4 @@
+import { escapeHtml } from "./escapeHtml.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
@@ -5,7 +6,6 @@ let imageUrl = "";
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {
-    // @TODO: Реализовать страницу добавления поста
     const appHtml = `
     <div class="page-container">
       <div class="header-container"></div>
@@ -55,7 +55,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       const description = document.querySelector(".textarea").value;
 
       onAddPostClick({
-        description: description,
+        description: escapeHtml(description),
         imageUrl: imageUrl,
       });
     });
