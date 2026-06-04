@@ -6,10 +6,6 @@ import { getLikes } from "./likes-helper.js";
 import { getTimeAgo } from "./date-helper.js";
 
 export function renderPostsPageComponent({ appEl }) {
-  /**
-   * @TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
-   * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
-   */
 
   const appHtml = posts
     .map((post, index) => {

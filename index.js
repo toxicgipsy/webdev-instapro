@@ -69,7 +69,6 @@ export const goToPage = (newPage, data) => {
     }
 
     if (newPage === USER_POSTS_PAGE) {
-      // @@TODO: реализовать получение постов юзера из API
       page = LOADING_PAGE;
       renderApp();
 
@@ -121,7 +120,6 @@ const renderApp = () => {
     return renderAddPostPageComponent({
       appEl,
       onAddPostClick({ description, imageUrl }) {
-        // @TODO: реализовать добавление поста в API
         addPost({ description, imageUrl, token: getToken() })
           .then((response) => {
             goToPage(POSTS_PAGE);
@@ -140,7 +138,6 @@ const renderApp = () => {
   }
 
   if (page === USER_POSTS_PAGE) {
-    // @TODO: реализовать страницу с фотографиями отдельного пользвателя
     return renderUserPostsPageComponent({
       appEl,
     });
